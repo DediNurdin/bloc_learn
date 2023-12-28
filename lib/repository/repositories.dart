@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:bloc_learn/model/news_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-
 import '../model/users_model.dart';
 
 class UserRepository {
@@ -41,12 +39,6 @@ class UserRepository {
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body)['data']['user_detail'];
 
-      if (kDebugMode) {
-        print('desde repository');
-      }
-      if (kDebugMode) {
-        print(result);
-      }
       return UserModel.fromJson(result);
     } else {
       if (kDebugMode) {

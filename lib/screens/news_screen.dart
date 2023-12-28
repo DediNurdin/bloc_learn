@@ -1,4 +1,3 @@
-import 'package:bloc_learn/blocs/login/login_bloc.dart';
 import 'package:bloc_learn/blocs/news/news_bloc.dart';
 import 'package:bloc_learn/blocs/news/news_event.dart';
 import 'package:bloc_learn/blocs/news/news_state.dart';
@@ -12,19 +11,9 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<LoginBloc>(
-          create: (BuildContext context) => LoginBloc(UserRepository()),
-        ),
-        BlocProvider<NewsBloc>(
-          create: (BuildContext context) => NewsBloc(UserRepository()),
-        ),
-      ],
-      child: Scaffold(
-        appBar: AppBar(title: const Text('News')),
-        body: blocBodyListNews(),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('News')),
+      body: blocBodyListNews(),
     );
   }
 
@@ -36,8 +25,10 @@ class NewsScreen extends StatelessWidget {
       child: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
           if (state is NewsLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue.shade800,
+              ),
             );
           }
           if (state is NewsLoadedState) {
@@ -49,27 +40,33 @@ class NewsScreen extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     child: Card(
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.blue.shade800,
                         child: Row(
                           children: [
                             const SizedBox(
                               width: 8,
                             ),
-                            SizedBox(
-                                height: 80,
-                                width: 80,
-                                child: Image.network(
-                                  '${newsList[index].thumbnail}',
-                                  fit: BoxFit.cover,
-                                )),
+                            Container(
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                        '${newsList[index].thumbnail}',
+                                      ))),
+                            ),
                             Expanded(
                               child: ListTile(
                                 title: Text(
                                   '${newsList[index].title}',
+                                  maxLines: 2,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 subtitle: Text(
                                   '${newsList[index].description}',
+                                  maxLines: 3,
                                   style: const TextStyle(color: Colors.yellow),
                                 ),
                               ),

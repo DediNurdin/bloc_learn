@@ -1,6 +1,6 @@
-//import 'package:bloc_learn/homepage.dart';
 import 'package:bloc_learn/blocs/login/login_bloc.dart';
 import 'package:bloc_learn/blocs/news/news_bloc.dart';
+import 'package:bloc_learn/cubit/device/device_cubit.dart';
 import 'package:bloc_learn/repository/repositories.dart';
 import 'package:bloc_learn/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Bloc Learn',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<NewsBloc>(
             create: (BuildContext context) => NewsBloc(UserRepository()),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => DeviceCubit(),
           ),
         ],
         child: const LoginPage(),
